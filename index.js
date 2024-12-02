@@ -5,15 +5,29 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth * 0.8;
 canvas.height = window.innerHeight * 0.8;
 
+let colors = [
+    "#be8778", "#f2c5e6", "#2b8e31", "#5d800e", "#56f342",
+    "#9e9d4f", "#be5dca", "#3058df", "#18c0c8", "#fb13f2",
+    "#f8450d", "#adaded", "#967c48", "#ac2e16", "#ead5af",
+    "#98f17b", "#c2182e", "#d85251", "#7f0b7f", "#ea137d",
+    "#79aef5", "#1d3239", "#2b65a1", "#f689d5", "#2d57c3",
+    "#77d754", "#eb205c", "#040145", "#18dd80", "#211014",
+    "#c9d81f", "#144304", "#827289", "#a07d03", "#9562a5",
+    "#dee34e", "#dd9cb2", "#293a18", "#2133a0", "#917860",
+    "#cfe2da", "#1b2f19", "#14c018", "#9a1146", "#cf0de7",
+    "#dd50ec", "#8513f5", "#b0e988", "#5c0c13", "#b31f3d"
+  ]
+  
+
 // Ball properties
 let ball = {
   x: canvas.width / 2,
-  y: canvas.height / 2,
+  y: 20,
   radius: 10,
-  dx: Math.random() * 10,
-  dy: Math.random() * 10,
+  dx: (Math.random() * 2) + 5,
+  dy: (Math.random() * 2) + 5,
   speed: 4,
-  color: '#61dafb'
+  color: colors[Math.floor(Math.random() * 49)]
 };
 
 let platform =  {
@@ -64,7 +78,7 @@ function update() {
   if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
     ball.dx *= -1;
   }
-  if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+  if (ball.y - ball.radius < 0) {
     ball.dy *= -1;
   }
 
@@ -73,8 +87,9 @@ function update() {
   ball.y += ball.dy;
 
   if(ball.x > platform.x && ball.x < platform.x + platform.w){
-    if(ball.y + ball.radius > platform.y){
+    if(ball.y + ball.radius > platform.y && ball.y + ball.radius < canvas.height){
         ball.dy *= -1;
+        ball.color = colors[Math.floor(Math.random() * 49)]
     }
   }
 
